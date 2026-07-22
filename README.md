@@ -1,16 +1,33 @@
-## Hi there 👋
+# Hi, I'm Neal 👋
 
-<!--
-**neal-ramjeawan/neal-ramjeawan** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+Cloud Platform Engineer with 6+ years of experience designing and operating secure cloud infrastructure.
 
-Here are some ideas to get you started:
+## 🚀 Current Focus
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+- Platform Engineering
+- AWS Architectures
+- Kubernetes
+- GitOps
+- Security Automation
+- Internal Developer Platforms
+
+## 🛠️ Technologies
+
+### Cloud
+AWS • Azure
+
+### Infrastructure as Code
+Terraform • OpenTofu • Ansible • Packer
+
+### Containers
+Docker • Kubernetes • Helm
+
+### CI/CD
+GitHub Actions • Spacelift
+
+### Security
+IAM • SSO • Secrets Management • Vulnerability Management
+
+## 📂 Featured Projects
+
+//coming soon 
