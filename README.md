@@ -1,6 +1,6 @@
 # Hi, I'm Neal 👋
 
-Cloud Platform Engineer with 6+ years of experience designing and operating secure cloud infrastructure.
+Cloud Platform Engineer with 7+ years of experience designing, building, and automating secure, scalable cloud platforms across AWS and Azure. Passionate about Platform Engineering, Infrastructure as Code, Developer Experience, and building secure self-service systems that enable engineering teams to move faster.
 
 ## 🚀 Current Focus
 
