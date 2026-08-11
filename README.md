@@ -1,23 +1,20 @@
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:222831,100:00ADB5&height=210&section=header&text=Neal%20Ramjeawan&fontSize=42&fontColor=EEEEEE&fontAlignY=35&desc=Cloud%20Platform%20Engineer%20%C2%B7%207%2B%20years%20in%20AWS%2C%20Azure%2C%20Linux%20%26%20Windows&descAlignY=55&descSize=16&animation=fadeIn" width="100%"/>
-
 <img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=20&duration=3000&pause=800&color=00ADB5&center=true&vCenter=true&width=650&lines=I+build+it%2C+break+it%2C+then+automate+it.;Currently+shipping+on+an+M1+Air+with+8GB+RAM.;Open+to+Cloud+Engineer+%2F+DevOps+%2F+SRE+roles." alt="Typing SVG" />
 
 [![GitHub](https://img.shields.io/badge/GitHub-222831?style=for-the-badge&logo=github&logoColor=EEEEEE)](https://github.com/neal-ramjeawan)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-00ADB5?style=for-the-badge&logo=linkedin&logoColor=white)](#)
 [![Portfolio](https://img.shields.io/badge/Portfolio-393E46?style=for-the-badge&logo=vercel&logoColor=EEEEEE)](#)
-![Profile views](https://komarev.com/ghpvc/?username=neal-ramjeawan&style=for-the-badge&color=00ADB5&label=PROFILE+VIEWS)
 
 </div>
 
 <br>
 
-## Hey, I'm Neal 👋
+## Most of this started as a question I couldn't answer at work
 
-I'm a cloud platform engineer who learns by taking things apart. Almost everything below started as a question I couldn't answer at work, so I built a smaller, deliberately breakable version of it at home until I could.
+I'm Neal — 6+ years across AWS, Azure, Linux, and Windows, and my usual way of answering "how does X actually work" is to rebuild a smaller, breakable version of X until I know for certain.
 
-A lot of it got built on a MacBook Air with 8GB of RAM, which sounds like a limitation and mostly was — but it also meant every project had to be Docker-first, profile-gated, and honest about resource usage before it was allowed near a real cloud bill. That constraint shows up more than once below.
+A lot of that rebuilding happened on a MacBook Air with 8GB of RAM, which sounds like a limitation and mostly was — but it also meant every project had to be Docker-first, profile-gated, and honest about resource usage before it was allowed near a real cloud bill. That constraint shows up more than once below.
 
 I'm currently looking at **Cloud Engineer, DevOps, and SRE / Systems Engineer** roles.
 
@@ -139,8 +136,9 @@ Every decision on this one had a reason I could defend: DynamoDB over RDS to dod
 
 <div align="center">
 
-![GitHub stats](https://github-readme-stats.vercel.app/api?username=neal-ramjeawan&show_icons=true&hide_border=true&theme=transparent&title_color=00ADB5&icon_color=00ADB5&text_color=EEEEEE)
-![Top languages](https://github-readme-stats.vercel.app/api/top-langs/?username=neal-ramjeawan&layout=compact&hide_border=true&theme=transparent&title_color=00ADB5&text_color=EEEEEE)
+![Followers](https://img.shields.io/github/followers/neal-ramjeawan?style=for-the-badge&color=00ADB5&labelColor=222831&label=FOLLOWERS)
+![Greendale Keystone](https://img.shields.io/github/stars/neal-ramjeawan/greendale-keystone?style=for-the-badge&color=00ADB5&labelColor=222831&label=%E2%98%85%20GREENDALE%20KEYSTONE)
+![Legacy Bank HA](https://img.shields.io/github/stars/neal-ramjeawan/legacy-bank-ha-migration?style=for-the-badge&color=00ADB5&labelColor=222831&label=%E2%98%85%20LEGACY%20BANK%20HA)
 
 </div>
 
@@ -156,7 +154,7 @@ Some of this will become the next project above. Some of it won't go anywhere. I
 
 <div align="center">
 
-<img src="https://capsule-render.vercel.app/api?type=waving&color=0:00ADB5,100:222831&height=100&section=footer" width="100%"/>
+---
 
 **Let's talk if you're hiring for Cloud, DevOps, or SRE — or if you just want to argue about whether infra should ever be exciting.**
 
