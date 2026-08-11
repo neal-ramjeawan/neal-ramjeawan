@@ -1,237 +1,163 @@
-# NEAL RAMJEAWAN
+<div align="center">
 
-### Cloud Platform · Automation · Security · Systems
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:222831,100:00ADB5&height=210&section=header&text=Neal%20Ramjeawan&fontSize=42&fontColor=EEEEEE&fontAlignY=35&desc=Cloud%20Platform%20Engineer%20%C2%B7%207%2B%20years%20in%20AWS%2C%20Azure%2C%20Linux%20%26%20Windows&descAlignY=55&descSize=16&animation=fadeIn" width="100%"/>
 
-> **I build infrastructure like a product.**
->
-> Secure by default. Automated wherever possible. Observable when things go wrong. Documented so someone else can operate it.
+<img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=20&duration=3000&pause=800&color=00ADB5&center=true&vCenter=true&width=650&lines=I+build+it%2C+break+it%2C+then+automate+it.;Currently+shipping+on+an+M1+Air+with+8GB+RAM.;Open+to+Cloud+Engineer+%2F+DevOps+%2F+SRE+roles." alt="Typing SVG" />
 
-I'm a Cloud Platform Engineer with 7+ years of experience designing, building, and automating infrastructure across **AWS, Azure, Linux, and Windows**.
+[![GitHub](https://img.shields.io/badge/GitHub-222831?style=for-the-badge&logo=github&logoColor=EEEEEE)](https://github.com/neal-ramjeawan)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-00ADB5?style=for-the-badge&logo=linkedin&logoColor=white)](#)
+[![Portfolio](https://img.shields.io/badge/Portfolio-393E46?style=for-the-badge&logo=vercel&logoColor=EEEEEE)](#)
+![Profile views](https://komarev.com/ghpvc/?username=neal-ramjeawan&style=for-the-badge&color=00ADB5&label=PROFILE+VIEWS)
 
-My interests sit at the intersection of **Platform Engineering, Cloud Security, Infrastructure as Code, Identity, Automation, and Developer Experience**.
+</div>
 
-I don't just want infrastructure to work.
+<br>
 
-**I want it to be reproducible, explainable, testable, observable, and difficult to misuse.**
+## Hey, I'm Neal 👋
 
----
+I'm a cloud platform engineer who learns by taking things apart. Almost everything below started as a question I couldn't answer at work, so I built a smaller, deliberately breakable version of it at home until I could.
 
-## `~/currently-building`
+A lot of it got built on a MacBook Air with 8GB of RAM, which sounds like a limitation and mostly was — but it also meant every project had to be Docker-first, profile-gated, and honest about resource usage before it was allowed near a real cloud bill. That constraint shows up more than once below.
 
-Most of my GitHub is a collection of engineering experiments, production-inspired platforms, and deliberately broken systems.
+I'm currently looking at **Cloud Engineer, DevOps, and SRE / Systems Engineer** roles.
 
-| Project | What I'm exploring |
-|---|---|
-| **CloudEye** | Detecting AWS ClickOps activity and turning CloudTrail events into actionable Slack notifications |
-| **Greendale Keystone** | A complete enterprise-inspired platform: identity, VPN, secrets, monitoring, logging, reverse proxy and CI/CD |
-| **Identity Automation Platform** | Automating identity lifecycle workflows across infrastructure and enterprise environments |
-| **Platform Engineering Lab** | Self-service infrastructure, GitOps, developer portals and platform abstractions |
-| **Security Labs** | Breaking systems deliberately, then designing the controls that should have stopped it |
+<br>
 
-> **Build → Break → Observe → Fix → Automate → Document**
+## What I'm building right now
 
-That's usually where the interesting engineering happens.
+<br>
 
----
+### 🔐 Greendale Keystone — a miniature enterprise, built to see how the pieces actually fit
+**[github.com/neal-ramjeawan/greendale-keystone](https://github.com/neal-ramjeawan/greendale-keystone)**
 
-## `~/engineering-interests`
+I wanted to stop learning identity, secrets, VPN, monitoring, and logging as separate tutorials and actually wire them together the way a real environment forces them to talk to each other. So: Samba4 AD-DC behind CoreDNS, WireGuard for remote access, Vault for secrets, Prometheus/Grafana/Loki for the "what just happened" layer, Traefik in front of all of it — each piece a gated Docker Compose profile so I could bring up only what I was actively working on.
 
-### ☁️ Cloud Platforms
+The interesting part was never the happy path, it was everything that broke on the way there:
+- Samba4 provisioning threw `ACCESS_DENIED (set_nt_acl_no_snum)` until I granted the container `privileged: true`
+- WireGuard peer names have to be alphanumeric-only — a linuxserver/wireguard image quirk that cost me an afternoon
+- Docker Desktop on Mac won't route host-to-container-bridge-IP the way Linux does, which broke my LDAP testing until I published the ports and pointed at `127.0.0.1` instead
 
-Designing cloud environments that are:
+The centerpiece is a self-service password reset flow: a Slack slash command, TOTP verified against a Vault-stored secret, an LDAP reset against AD, and a structured JSON audit log that lands in Loki — auto-approved, the same way a real reset would work, no second human in the loop.
 
-**secure · scalable · observable · automated · boring to operate**
+`Docker` `Samba4 AD-DC` `WireGuard` `Vault` `Prometheus` `Grafana` `Loki` `Traefik` `Flask`
 
-AWS is currently my primary cloud focus, with experience across Azure and hybrid environments.
+<br>
 
-### ⚙️ Platform Engineering
+### 🏦 Legacy Bank HA Migration — from "it works on my machine" to chaos-tested HA
+**[github.com/neal-ramjeawan/legacy-bank-ha-migration](https://github.com/neal-ramjeawan/legacy-bank-ha-migration)**
 
-I'm interested in the layer between infrastructure and developers:
+Starting point: a legacy Flask app on SQLite, single point of failure in every direction. End point: a Postgres-backed, gunicorn-served app on an HA Kubernetes cluster with anti-affinity, pod disruption budgets, rolling updates, NetworkPolicy, TLS via cert-manager, and pod security hardening — deployed through Helm and Argo CD.
 
-```text
-        ┌───────────────────────────────┐
-        │          Developers           │
-        └───────────────┬───────────────┘
-                        │
-                 Self-Service
-                        │
-        ┌───────────────▼───────────────┐
-        │       Internal Platform       │
-        │                               │
-        │  Golden Paths · Templates      │
-        │  Automation · Policy · APIs    │
-        └───────────────┬───────────────┘
-                        │
-        ┌───────────────▼───────────────┐
-        │        Cloud / Infra          │
-        │                               │
-        │ AWS · Kubernetes · Networks   │
-        │ IAM · Secrets · Compute       │
-        └───────────────────────────────┘
-```
+Then I tried to break it on purpose:
+- **Pod kills:** 0/200 failed requests
+- **Node drain:** clean retarget, zero downtime
+- **Rolling update under load:** 0/300 failed requests
 
-The goal isn't to hide infrastructure.
+CI runs lint, pytest, a Trivy scan, CodeQL, kubeconform, and a full kind smoke test on every push. I wrote up the real bugs I hit along the way — not the polished version, the actual debugging — in a full case-study post alongside the README.
 
-**It's to make the right thing the easiest thing to do.**
+`Flask` `PostgreSQL` `Kubernetes` `Helm` `Argo CD` `k6` `Trivy` `CodeQL` `GitHub Actions`
 
-### 🔐 Cloud Security
+<br>
 
-Security shouldn't be a ticket at the end of a deployment.
+### 👀 CloudEye — what if ClickOps left a trail you could actually act on?
 
-I'm particularly interested in:
+The idea started from a real annoyance: infra drift is invisible until it isn't. CloudEye watches AWS CloudTrail for management-plane activity, tells the difference between an approved IaC pipeline and someone in the console making a "quick fix," enriches the event with actor, resource, account, region, source IP, and severity, and pushes it to Slack instead of burying it in a log group nobody reads.
 
-- Identity & access design
-- Least privilege
-- Secrets management
-- Zero Trust architectures
-- Cloud detection & response
-- Infrastructure security
-- Policy as Code
-- Auditability
-- Secure automation
+Next up: multi-account AWS Organizations support and configurable risk scoring, so alert volume scales with how much I actually trust the account it came from.
 
-### 🤖 Automation
+`CloudTrail` `EventBridge` `Lambda` `Terraform` `Slack`
 
-If something is:
+<br>
 
-- repetitive
-- predictable
-- performed manually
-- error-prone
-- or difficult to audit
+### 🩹 Patch Compliance Dashboard — making SSM Patch Manager data mean something
+Every decision on this one had a reason I could defend: DynamoDB over RDS to dodge VPC plumbing and idle cost, Streamlit Community Cloud over App Runner because a dashboard didn't need a container, `typing.Protocol` for dependency injection instead of pulling in a framework for a project this size. Backend is Lambda + EventBridge + DynamoDB, frontend is Streamlit, CI runs unit tests, ruff, and `terraform fmt` on every push.
 
-I probably want to automate it.
+`AWS Systems Manager` `Lambda` `EventBridge` `DynamoDB` `Streamlit` `Terraform`
 
----
+<br>
 
-# `~/toolbox`
+## More in the lab
 
-I care more about solving problems than collecting tools, but these are some of the technologies I work with:
+| Project | What it is | Status |
+|---|---|---|
+| **Identity Automation Platform** | Python IAM lifecycle automation — validation layer, audit logging, and a workflow engine with crash recovery | Building — API/UI phases next |
+| **[Zwazo](https://github.com/neal-ramjeawan/do-you-know-mauritius)** | A trivia site that's *only* about Mauritius — 150+ questions across 8 categories, React/Vite/Tailwind | Shipped |
+| **Mauritius Info Hub** | Public dashboard aggregating weather, power, water, and road alerts for Mauritius — Next.js/FastAPI/Postgres, built for a $0/month stack | Building V1 |
+| **AWX Ansible Lab** | Ansible Tower (AWX) on minikube, GitHub-integrated playbook storage, CI via GitHub Actions | Packaged |
+| **Keycloak IAM Demo** | Eight-phase IAM deep dive — deployment through M2M auth, fine-grained authz, LDAP federation, identity brokering, multi-realm, Terraform-managed config, Admin REST API scripting | Repo |
+| **K8s / OpenShift Troubleshooting Labs** | Two repos, deliberately broken on purpose — five modules each of broken manifests, runbooks, and automated break/verify scripts | Repo |
+| **AWS Transfer Family App** | SFTP user management shouldn't require touching the console by hand — Streamlit + FastAPI + boto3, IRSA for auth, tested against LocalStack | Built |
+
+<br>
+
+## How I actually work
+
+**If I can't see it, I don't trust it.** Every project above got monitoring and logging before it got polish — Greendale Keystone had Grafana wired to both Prometheus and Loki before the password-reset feature even worked.
+
+**Boring is the goal, not the starting point.** Nothing above was boring while I was building it. That's the point — the weird failure modes get found and fixed *before* something depends on it.
+
+**Docs are part of the build.** I write mine in first person, as the person who actually made the decisions — DynamoDB over RDS, Streamlit over App Runner, `Protocol` over a DI framework — because "we chose X" without the reasoning is just trivia for the next engineer to rediscover the hard way.
+
+**Break it on purpose, on my own schedule.** Chaos scripts, intentionally broken manifests, break/verify runbooks — I'd rather find the failure mode at 2pm on a Tuesday with nothing on the line than at 2am with something on fire.
+
+<br>
+
+## Toolbox
 
 **Cloud**
+![AWS](https://img.shields.io/badge/AWS-232F3E?style=flat-square&logo=amazonaws&logoColor=white)
+![Azure](https://img.shields.io/badge/Azure-0078D4?style=flat-square&logo=microsoftazure&logoColor=white)
 
-`AWS` `Azure`
-
-**Infrastructure**
-
-`Terraform` `OpenTofu` `Ansible` `Packer`
+**Infrastructure as Code**
+![Terraform](https://img.shields.io/badge/Terraform-7B42BC?style=flat-square&logo=terraform&logoColor=white)
+![OpenTofu](https://img.shields.io/badge/OpenTofu-FFDA18?style=flat-square&logo=opentofu&logoColor=222831)
+![Ansible](https://img.shields.io/badge/Ansible-EE0000?style=flat-square&logo=ansible&logoColor=white)
+![Packer](https://img.shields.io/badge/Packer-02A8EF?style=flat-square&logo=packer&logoColor=white)
 
 **Containers & Platforms**
-
-`Docker` `Kubernetes` `Helm`
+![Docker](https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white)
+![Kubernetes](https://img.shields.io/badge/Kubernetes-326CE5?style=flat-square&logo=kubernetes&logoColor=white)
+![Helm](https://img.shields.io/badge/Helm-0F1689?style=flat-square&logo=helm&logoColor=white)
 
 **CI/CD & GitOps**
-
-`GitHub Actions` `Spacelift` `GitOps`
+![GitHub Actions](https://img.shields.io/badge/GitHub_Actions-2088FF?style=flat-square&logo=githubactions&logoColor=white)
+![Argo CD](https://img.shields.io/badge/Argo_CD-EF7B4D?style=flat-square&logo=argo&logoColor=white)
 
 **Identity & Security**
-
-`IAM` `Active Directory` `SSO` `Secrets Management`
+![Vault](https://img.shields.io/badge/Vault-FFEC6E?style=flat-square&logo=vault&logoColor=222831)
+![Keycloak](https://img.shields.io/badge/Keycloak-393E46?style=flat-square&logo=keycloak&logoColor=white)
+![Active Directory](https://img.shields.io/badge/Active_Directory-00ADB5?style=flat-square)
+![IAM](https://img.shields.io/badge/IAM-222831?style=flat-square)
 
 **Systems**
+![Linux](https://img.shields.io/badge/Linux-FCC624?style=flat-square&logo=linux&logoColor=222831)
+![Windows Server](https://img.shields.io/badge/Windows_Server-0078D6?style=flat-square&logo=windows&logoColor=white)
+![PowerShell](https://img.shields.io/badge/PowerShell-5391FE?style=flat-square&logo=powershell&logoColor=white)
+![Python](https://img.shields.io/badge/Python-3776AB?style=flat-square&logo=python&logoColor=white)
 
-`Linux` `Windows Server` `PowerShell` `Python`
+<br>
 
----
+<div align="center">
 
-# `~/projects`
+![GitHub stats](https://github-readme-stats.vercel.app/api?username=neal-ramjeawan&show_icons=true&hide_border=true&theme=transparent&title_color=00ADB5&icon_color=00ADB5&text_color=EEEEEE)
+![Top languages](https://github-readme-stats.vercel.app/api/top-langs/?username=neal-ramjeawan&layout=compact&hide_border=true&theme=transparent&title_color=00ADB5&text_color=EEEEEE)
 
-### 🔭 Featured
+</div>
 
-**CloudEye**
+<br>
 
-> *What if ClickOps left a trail you could actually act on?*
+## On the radar
 
-A security-focused AWS automation project that detects infrastructure changes, identifies the actor and action, records the event, and pushes an actionable notification to Slack.
+Cloud, security, and platform engineering meeting AI agents is where I'm spending more of my time — not as a buzzword, I've been prototyping a Confluence MCP server and a PagerDuty + Confluence incident-postmortem pipeline to see what agentic SRE tooling actually looks like day to day. Also circling: eBPF-based observability, policy as code, and cloud detection engineering.
 
-**Focus:** AWS · CloudTrail · IAM · Event-driven architecture · Security automation
+Some of this will become the next project above. Some of it won't go anywhere. I keep both kinds of notes.
 
----
+<br>
 
-**Greendale Keystone**
+<div align="center">
 
-> *A miniature enterprise infrastructure platform.*
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:00ADB5,100:222831&height=100&section=footer" width="100%"/>
 
-A production-inspired environment built from open-source components, covering identity, VPN access, secrets management, monitoring, logging, reverse proxy and CI/CD.
+**Let's talk if you're hiring for Cloud, DevOps, or SRE — or if you just want to argue about whether infra should ever be exciting.**
 
-**Focus:** Docker · Samba AD · WireGuard · Vault · Prometheus · Grafana · Loki · Traefik
-
----
-
-**Identity Automation Platform**
-
-> *Identity should be an API, not a ticket.*
-
-An automation platform for managing identity lifecycle workflows and integrating enterprise identity with infrastructure automation.
-
-**Focus:** Python · Ansible · Active Directory · AWS · Automation
-
----
-
-# `~/principles`
-
-### 01 — Automate the known
-
-Manual work should be reserved for decisions, not repetition.
-
-### 02 — Secure the path, not just the destination
-
-Security controls should exist throughout the lifecycle, not only at deployment time.
-
-### 03 — Infrastructure is software
-
-Version it. Test it. Review it. Document it. Break it.
-
-### 04 — Make failures useful
-
-A failure that cannot be observed is an operational mystery.
-
-A failure with good telemetry is a debugging problem.
-
-### 05 — Prefer boring infrastructure
-
-The best platform is often the one engineers barely notice.
-
-### 06 — Build for the next engineer
-
-If only the person who built it understands it, it isn't finished.
-
----
-
-# `~/lab-notes`
-
-I'm particularly interested in exploring where **Cloud, Security, Platform Engineering and AI** intersect.
-
-Some things on my radar:
-
-- AI-assisted infrastructure operations
-- Agentic infrastructure workflows
-- MCP-powered DevOps tooling
-- Kubernetes platform engineering
-- eBPF-based observability
-- Policy as Code
-- Cloud detection engineering
-- Automated remediation
-- FinOps automation
-- Internal Developer Platforms
-- Zero Trust infrastructure
-- Ephemeral environments
-- Infrastructure testing
-- Software supply-chain security
-
-Some will become projects.
-
-Some will fail spectacularly.
-
-**Both outcomes are useful.**
-
----
-
-# `~/contact`
-
-If you're interested in Cloud Platform Engineering, DevOps, Security, Automation, or building infrastructure that behaves like a real product:
-
-**Let's build something.**
-
-[LinkedIn](#) · [Portfolio](#) · [GitHub](#)
-
+</div>
