@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=20&duration=3000&pause=800&color=00ADB5&center=true&vCenter=true&width=650&lines=I+build+it%2C+break+it%2C+fix+it%2Cthen+automate+it.;Currently+shipping+on+an+M1+Air+with+8GB+RAM.;Open+to+Cloud+Engineer+%2F+DevOps+%2F+SRE+roles." alt="Typing SVG" />
+<img src="https://readme-typing-svg.demolab.com/?font=Fira+Code&size=20&duration=3000&pause=800&color=00ADB5&center=true&vCenter=true&width=650&lines=I+build+it%2C+break+it%2C+fix+it+then+automate+it.;Currently+shipping+on+an+M1+Air+with+8GB+RAM.;Open+to+Cloud+Engineer+%2F+DevOps+%2F+SRE+roles." alt="Typing SVG" />
 
 [![GitHub](https://img.shields.io/badge/GitHub-222831?style=for-the-badge&logo=github&logoColor=EEEEEE)](https://github.com/neal-ramjeawan)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-00ADB5?style=for-the-badge&logo=linkedin&logoColor=white)](#)
